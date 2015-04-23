@@ -8,6 +8,7 @@ import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory;
+import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
@@ -21,25 +22,27 @@ public class MinaServer {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		//¼àÌıÁ´½Óµ½À´µÄ¶ÔÏó£¬»ùÓÚTCP/IP£¬ËùÒÔÊ¹ÓÃsocket
+		//ç›‘å¬é“¾æ¥åˆ°æ¥çš„å¯¹è±¡ï¼ŒåŸºäºTCP/IPï¼Œæ‰€ä»¥ä½¿ç”¨socket
 		IoAcceptor acceptor = new NioSocketAcceptor();
 		
-		//Ìí¼Ófilter£¬°Ñ¶ş½øÖÆÊı¾İ»òÕßÊÇĞ­ÒéÏà¹ØµÄÊı¾İ×ª»»³ÉÒ»¸öÏûÏ¢¶ÔÏó£¬·´¹ıÀ´ÒàÈ»
+		//æ·»åŠ filterï¼ŒæŠŠäºŒè¿›åˆ¶æ•°æ®æˆ–è€…æ˜¯åè®®ç›¸å…³çš„æ•°æ®è½¬æ¢æˆä¸€ä¸ªæ¶ˆæ¯å¯¹è±¡ï¼Œåè¿‡æ¥äº¦ç„¶
 		acceptor.getFilterChain().addLast("logger", new LoggingFilter());
-		//×Ô¶¨Òå±à½âÂë
-		//acceptor.getFilterChain().addLast("person", 
-		//		new ProtocolCodecFilter(new HCoderFactory(Charset.forName("UTF-8"))));
+		//è‡ªå®šä¹‰ç¼–è§£ç 
+		acceptor.getFilterChain().addLast("text", 
+				new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"))));
+		acceptor.getFilterChain().addLast("selfdef", 
+				new ProtocolCodecFilter(new HCoderFactory(Charset.forName("UTF-8"))));
 		acceptor.getFilterChain().addLast("person", 
 				new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
 		
-		//ÉèÖÃ´¦ÀíÁ´½ÓÇëÇóµÄ´¦ÀíÆ÷£¬×Ô¼º½øĞĞÖØÔØ£¬ÊµÏÖ±ØÒªµÄ´¦Àí£¬ÆäËü²¿·ÖÊ¹ÓÃÄ¬ÈÏÄÚÈİ¼´¿É
+		//è®¾ç½®å¤„ç†é“¾æ¥è¯·æ±‚çš„å¤„ç†å™¨ï¼Œè‡ªå·±è¿›è¡Œé‡è½½ï¼Œå®ç°å¿…è¦çš„å¤„ç†ï¼Œå…¶å®ƒéƒ¨åˆ†ä½¿ç”¨é»˜è®¤å†…å®¹å³å¯
 		acceptor.setHandler(new MinaServerHandler());
 		
-		//Ã¿´Î¶ÁĞ´µÄbuffer´óĞ¡
+		//æ¯æ¬¡è¯»å†™çš„bufferå¤§å°
 		acceptor.getSessionConfig().setReadBufferSize(2048);
-		//¿ÕÏĞÊ±¼ä´ïµ½½Úµãºó»á²úÉúÏàÓ¦µÄ»Øµ÷£¬µ¥Î»Ãë
+		//ç©ºé—²æ—¶é—´è¾¾åˆ°èŠ‚ç‚¹åä¼šäº§ç”Ÿç›¸åº”çš„å›è°ƒï¼Œå•ä½ç§’
 		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE,	 10);
-		//¿ªÊ¼¼àÌıÏàÓ¦¶Ë¿Ú£¬ÒÔ´¦Àí¶ÔÓ¦µÄsocketÁ´½ÓÇëÇó
+		//å¼€å§‹ç›‘å¬ç›¸åº”ç«¯å£ï¼Œä»¥å¤„ç†å¯¹åº”çš„socketé“¾æ¥è¯·æ±‚
 		acceptor.bind(new InetSocketAddress(PORT));
 	}
 

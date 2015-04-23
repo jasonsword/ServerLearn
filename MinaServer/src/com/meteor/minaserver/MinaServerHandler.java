@@ -6,7 +6,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.meteor.entity.Person;
 
-//使用适配器模式来简化iohandler带来的代码量
+//浣跨敤閫傞厤鍣ㄦā寮忔潵绠�鍖杋ohandler甯︽潵鐨勪唬鐮侀噺
 public class MinaServerHandler extends IoHandlerAdapter {
 
 	public void exceptionCaught(IoSession session, Throwable cause)
@@ -29,7 +29,7 @@ public class MinaServerHandler extends IoHandlerAdapter {
 			}
 			System.out.println("Message written...");
 			
-			person.setName("李四");
+			person.setName("寮犱笁");
 			person.setAction(2);
 			session.write(person);
 		}
