@@ -12,7 +12,7 @@ import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 import com.meteor.protocol.HCoderFactory;
 
-public class MyClient {
+public class MinaClient {
 
 	private static final int PORT = 9029;
 	/**
