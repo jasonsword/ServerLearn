@@ -1,7 +1,5 @@
 package com.meteor.protocol;
 
-import java.nio.charset.Charset;
-
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;
@@ -12,14 +10,10 @@ public class HCoderFactory implements ProtocolCodecFactory {
 
 	private final HEncoder encoder;
 	private final HDecoder decoder;
-	
+
 	public HCoderFactory(){
-		this(Charset.defaultCharset());
-	}
-	
-	public HCoderFactory(Charset set){
-		this.encoder = new HEncoder(set);
-		this.decoder = new HDecoder(set);
+		this.encoder = new HEncoder();
+		this.decoder = new HDecoder();
 	}
 	
 	public ProtocolEncoder getEncoder(IoSession session) throws Exception {

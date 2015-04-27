@@ -1,21 +1,13 @@
 package com.meteor.protocol;
 
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-import com.meteor.entity.Person;
-
 public class HDecoder extends CumulativeProtocolDecoder {
-
-	private final Charset charset;
 	
-	public HDecoder(Charset set){
-		this.charset = set;
+	public HDecoder(){
 	}
 	
 	
@@ -48,16 +40,37 @@ public class HDecoder extends CumulativeProtocolDecoder {
 	 * */
 	protected boolean doDecode(IoSession session, IoBuffer in,
 			ProtocolDecoderOutput out) throws Exception {
-		CharsetDecoder decoder = charset.newDecoder();
-		
-		String name = in.getString(decoder);
-		
-		Person person = new Person();
-		person.setName(name);
-		
-		out.write(person);
-		
-		return false;
+ 
+        IoBuffer resultBuffer = null;
+        do{         
+            int opCode = in.getInt();
+            int msgLen = in.getInt();
+            System.out.println("opcode  " + opCode + " msgLen " + msgLen);
+            
+            msgLen = msgLen - 8;
+            if (msgLen < 0) {
+				System.out.println("msgLen error");
+				return false;
+			}
+            
+            if (msgLen > in.remaining()) {
+				System.out.println("not recv complete");
+				return false;
+			} else {
+            	byte[] msgBytes = new byte[msgLen];
+            	in.get(msgBytes);
+            	System.out.println("recv complete");
+            	
+            	resultBuffer = IoBuffer.allocate(msgLen).setAutoExpand(true);
+            	resultBuffer.put(msgBytes);
+            	break;
+			}
+        }
+        while(in.hasRemaining());
+ 
+        resultBuffer.flip();
+        out.write(resultBuffer);
+        return true; 
 	}
 
 }

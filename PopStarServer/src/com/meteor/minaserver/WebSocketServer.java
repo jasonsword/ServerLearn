@@ -9,7 +9,7 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 public class WebSocketServer {
-	public static final int PORT = 9029;
+	public static final int PORT = 9028;
 
 	public static void main(String[] args) throws IOException {
 

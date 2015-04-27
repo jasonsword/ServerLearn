@@ -25,6 +25,8 @@ public class WebSocketIoHandler extends IoHandlerAdapter {
     public void messageReceived(IoSession session, Object message) throws Exception {
     	IoBuffer buffer = (IoBuffer)message;
     	
+    	
+    	
     	byte[] b = new byte[buffer.limit()];  
     	buffer.get(b); 
 
@@ -36,6 +38,8 @@ public class WebSocketIoHandler extends IoHandlerAdapter {
     		
         	String m = new String(buffer.array());
 			String sss = getSecWebSocketAccept(m);
+			
+			System.out.println(sss);
 			
 			buffer.clear();
 			buffer.put(sss.getBytes("utf-8"));
