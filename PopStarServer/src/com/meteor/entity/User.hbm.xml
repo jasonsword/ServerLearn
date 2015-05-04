@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-access="field">
+
+	<class name="com.meteor.entity.User" table="user">
+		<id name="index" column="index">
+			<generator class="native" />
+		</id>
+
+		<property name="username" column="username" />
+		<property name="password" column="password" />
+		<property name="name" column="name" />
+		<property name="sex" column="sex" />
+		<property name="age" column="age" />
+		<property name="telephone" column="telephone" />
+		<property name="idcard" column="idcard" />
+		<property name="locked" column="locked" />
+	</class>
+
+</hibernate-mapping>

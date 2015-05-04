@@ -2,6 +2,8 @@ package com.meteor.minaserver;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+
+import org.apache.log4j.PropertyConfigurator;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -21,6 +23,8 @@ public class MinaServer {
 	public static void main(String[] args) throws IOException {
 		//监听链接到来的对象，基于TCP/IP，所以使用socket
 		IoAcceptor acceptor = new NioSocketAcceptor();
+		
+		PropertyConfigurator.configure("src/log4j.properties");
 		
 		//添加filter，把二进制数据或者是协议相关的数据转换成一个消息对象，反过来亦然
 		acceptor.getFilterChain().addLast("logger", new LoggingFilter());

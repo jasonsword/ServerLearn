@@ -45,21 +45,19 @@ public class HDecoder extends CumulativeProtocolDecoder {
         do{         
             int opCode = in.getInt();
             int msgLen = in.getInt();
-            System.out.println("opcode  " + opCode + " msgLen " + msgLen);
-            
-            msgLen = msgLen - 8;
-            if (msgLen < 0) {
+            //System.out.println("opcode  " + opCode + " msgLen " + msgLen);
+            if (msgLen <= 0) {
 				System.out.println("msgLen error");
 				return false;
 			}
             
             if (msgLen > in.remaining()) {
-				System.out.println("not recv complete");
+				//System.out.println("not recv complete");
 				return false;
 			} else {
             	byte[] msgBytes = new byte[msgLen];
             	in.get(msgBytes);
-            	System.out.println("recv complete");
+            	//System.out.println("recv complete");
             	
             	resultBuffer = IoBuffer.allocate(msgLen).setAutoExpand(true);
             	resultBuffer.put(msgBytes);
