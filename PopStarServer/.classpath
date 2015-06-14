@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Server/protoc-java-2.6.1/protobuf-java-2.6.1.jar" sourcepath="C:/Server/protoc-java-2.6.1/protobuf-java-2.6.1-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Server/apache-mina-2.0.9/dist/mina-core-2.0.9.jar" sourcepath="C:/Server/apache-mina-2.0.9/src/mina-core"/>
-	<classpathentry kind="lib" path="C:/Server/slf4j-1.7.12/slf4j-api-1.7.12.jar"/>
+	<classpathentry kind="lib" path="C:/Server/slf4j-1.7.12/slf4j-api-1.7.12.jar" sourcepath="C:/Server/slf4j-1.7.12/slf4j-api-1.7.12-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Server/slf4j-1.7.12/slf4j-log4j12-1.7.12.jar"/>
 	<classpathentry kind="lib" path="C:/Server/apache-log4j-1.2.17/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="C:/Server/hibernate-release-4.3.9.Final/lib/required/hibernate-core-4.3.9.Final.jar" sourcepath="C:/Server/hibernate-release-4.3.9.Final/documentation"/>
